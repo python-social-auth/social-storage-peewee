@@ -5,21 +5,21 @@ from setuptools import setup
 
 
 def long_description():
-    return open(join(dirname(__file__), 'README.rst')).read()
+    return open(join(dirname(__file__), 'README.md')).read()
 
 def load_requirements():
     return open(join(dirname(__file__), 'requirements.txt')).readlines()
 
 setup(
-    name='python-social-auth-app-flask',
-    version='0.0.1',
+    name='python-social-auth-storage-peewee',
+    version=__import__('social_peewee').__version__,
     author='Matias Aguirre',
     author_email='matiasaguirre@gmail.com',
-    description='Python social authentication made simple.',
+    description='Python Social Authentication, Peewee storage.',
     license='BSD',
-    keywords='flask, social auth',
-    url='https://github.com/python-social-auth/social-app-flask',
-    packages=['social_flask'],
+    keywords='peewee, social auth',
+    url='https://github.com/python-social-auth/social-storage-peewee',
+    packages=['social_peewee'],
     long_description=long_description(),
     install_requires=load_requirements(),
     classifiers=[

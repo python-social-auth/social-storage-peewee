@@ -4,8 +4,8 @@ import base64
 from peewee import CharField, Model, Proxy, IntegrityError
 from playhouse.kv import JSONField
 
-from social.storage import UserMixin, AssociationMixin, NonceMixin, \
-                           CodeMixin, BaseStorage
+from social_core.storage import UserMixin, AssociationMixin, NonceMixin, \
+                                CodeMixin, BaseStorage
 
 
 def get_query_by_dict_param(cls, params):
