@@ -8,7 +8,7 @@ mechanism with support for several frameworks and auth providers.
 This is the [Peewee](http://docs.peewee-orm.com/) component of the
 [python-social-auth ecosystem](https://github.com/python-social-auth/social-core),
 it implements the needed functionality to integrate
-[python-social-auth-core](https://github.com/python-social-auth/social-core)
+[social-auth-core](https://github.com/python-social-auth/social-core)
 into a project using Peewee as the storage solution.
 
 ## Documentation
@@ -18,7 +18,7 @@ Project documentation is available at http://python-social-auth.readthedocs.org/
 ## Setup
 
 ```shell
-$ pip install python-social-auth-storage-mongoengine
+$ pip install social-auth-storage-peewee
 ```
 
 ## Contributing

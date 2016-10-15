@@ -11,7 +11,7 @@ from social_core.storage import UserMixin, AssociationMixin, NonceMixin, \
 def get_query_by_dict_param(cls, params):
     query = True
 
-    for field_name, value in params.iteritems():
+    for field_name, value in params.items():
         query_item = cls._meta.fields[field_name] == value
         query = query & query_item
         return query
