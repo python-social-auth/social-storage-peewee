@@ -1,11 +1,11 @@
 import six
 import base64
 
-from peewee import CharField, Model, Proxy, IntegrityError
+from peewee import CharField, IntegerField, Model, Proxy, IntegrityError
 from playhouse.kv import JSONField
 
 from social_core.storage import UserMixin, AssociationMixin, NonceMixin, \
-                                CodeMixin, BaseStorage
+                                CodeMixin, PartialMixin, BaseStorage
 
 
 def get_query_by_dict_param(cls, params):
@@ -188,11 +188,32 @@ class PeeweeCodeMixin(CodeMixin, BaseModel):
             return None
 
 
+class PeeweePartialMixin(PartialMixin, BaseModel):
+    token = CharField()  # base64 encoded
+    data = JSONField(null=True)
+    next_step = IntegerField()
+    backend = CharField()
+
+    @classmethod
+    def load(cls, token):
+        try:
+            return cls.select().where(cls.token == token).get()
+        except cls.DoesNotExist:
+            return None
+
+    @classmethod
+    def destroy(cls, token):
+        partial = cls.load(token)
+        if partial:
+            partial.delete()
+
+
 class BasePeeweeStorage(BaseStorage):
     user = PeeweeUserMixin
     nonce = PeeweeNonceMixin
     association = PeeweeAssociationMixin
     code = PeeweeCodeMixin
+    partial = PeeweePartialMixin
 
     @classmethod
     def is_integrity_error(cls, exception):
