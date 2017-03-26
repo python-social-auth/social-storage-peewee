@@ -92,7 +92,7 @@ class PeeweeUserMixin(UserMixin, BaseModel):
         if pk:
             kwargs = {'id': pk}
         try:
-            return cls.user_model().select().get(
+            return cls.user_model().get(
                 get_query_by_dict_param(cls.user_model(), kwargs)
             )
         except cls.user_model().DoesNotExist:
@@ -137,9 +137,9 @@ class PeeweeNonceMixin(NonceMixin, BaseModel):
 
     @classmethod
     def use(cls, server_url, timestamp, salt):
-        return cls.select().get_or_create(cls.server_url == server_url,
-                                          cls.timestamp == timestamp,
-                                          cls.salt == salt)
+        return cls.get_or_create(cls.server_url == server_url,
+                                 cls.timestamp == timestamp,
+                                 cls.salt == salt)
 
 
 class PeeweeAssociationMixin(AssociationMixin, BaseModel):
@@ -153,8 +153,8 @@ class PeeweeAssociationMixin(AssociationMixin, BaseModel):
     @classmethod
     def store(cls, server_url, association):
         try:
-            assoc = cls.select().get(cls.server_url == server_url,
-                                     cls.handle == association.handle)
+            assoc = cls.get(cls.server_url == server_url,
+                            cls.handle == association.handle)
         except cls.DoesNotExist:
             assoc = cls(server_url=server_url,
                         handle=association.handle)
@@ -183,7 +183,7 @@ class PeeweeCodeMixin(CodeMixin, BaseModel):
     @classmethod
     def get_code(cls, code):
         try:
-            return cls.select().get(cls.code == code)
+            return cls.get(cls.code == code)
         except cls.DoesNotExist:
             return None
 
@@ -197,7 +197,7 @@ class PeeweePartialMixin(PartialMixin, BaseModel):
     @classmethod
     def load(cls, token):
         try:
-            return cls.select().where(cls.token == token).get()
+            return cls.get(cls.token == token)
         except cls.DoesNotExist:
             return None
 
