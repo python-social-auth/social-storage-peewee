@@ -1,11 +1,19 @@
 import six
 import base64
+import json
 
-from peewee import CharField, IntegerField, Model, Proxy, IntegrityError
-from playhouse.kv import JSONField
-
+from peewee import CharField, IntegerField, Model, Proxy, IntegrityError, \
+                   TextField
 from social_core.storage import UserMixin, AssociationMixin, NonceMixin, \
                                 CodeMixin, PartialMixin, BaseStorage
+
+class JSONField(TextField):
+    def db_value(self, value):
+        return json.dumps(value)
+
+    def python_value(self, value):
+        if value is not None:
+            return json.loads(value)
 
 
 def get_query_by_dict_param(cls, params):
