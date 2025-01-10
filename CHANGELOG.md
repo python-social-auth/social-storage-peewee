@@ -10,15 +10,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.1.0](https://github.com/python-social-auth/social-storage-peewee/releases/tag/1.0.1) - 2017-05-06
 
 ### Changed
+
 - Updated `select` queries with method that accepts query arguemnts.
 
 ## [1.0.0](https://github.com/python-social-auth/social-storage-peewee/releases/tag/1.0.0) - 2017-01-22
 
 ### Added
+
 - Added partial pipeline db storage solution
 
 ## [0.0.1](https://github.com/python-social-auth/social-storage-peewee/releases/tag/0.0.1) - 2016-11-27
 
 ### Changed
+
 - Split from the monolitic [python-social-auth](https://github.com/omab/python-social-auth)
   codebase

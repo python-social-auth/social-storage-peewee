@@ -1,11 +1,17 @@
-import six
 import base64
 import json
 
-from peewee import CharField, IntegerField, Model, Proxy, IntegrityError, \
-                   TextField
-from social_core.storage import UserMixin, AssociationMixin, NonceMixin, \
-                                CodeMixin, PartialMixin, BaseStorage
+import six
+from peewee import CharField, IntegerField, IntegrityError, Model, Proxy, TextField
+from social_core.storage import (
+    AssociationMixin,
+    BaseStorage,
+    CodeMixin,
+    NonceMixin,
+    PartialMixin,
+    UserMixin,
+)
+
 
 class JSONField(TextField):
     def db_value(self, value):
@@ -55,7 +61,7 @@ class PeeweeUserMixin(UserMixin, BaseModel):
 
     @classmethod
     def username_field(cls):
-        return getattr(cls.user_model(), 'USERNAME_FIELD', 'username')
+        return getattr(cls.user_model(), "USERNAME_FIELD", "username")
 
     @classmethod
     def allowed_to_disconnect(cls, user, backend_name, association_id=None):
@@ -65,7 +71,7 @@ class PeeweeUserMixin(UserMixin, BaseModel):
             query = cls.select().where(cls.provider != backend_name)
         query = query.where(cls.user == user)
 
-        if hasattr(user, 'has_usable_password'):
+        if hasattr(user, "has_usable_password"):
             valid_password = user.has_usable_password()
         else:
             valid_password = True
@@ -91,14 +97,14 @@ class PeeweeUserMixin(UserMixin, BaseModel):
     @classmethod
     def create_user(cls, *args, **kwargs):
         username_field = cls.username_field()
-        if 'username' in kwargs and username_field not in kwargs:
-            kwargs[username_field] = kwargs.pop('username')
+        if "username" in kwargs and username_field not in kwargs:
+            kwargs[username_field] = kwargs.pop("username")
         return cls.user_model().create(*args, **kwargs)
 
     @classmethod
     def get_user(cls, pk, **kwargs):
         if pk:
-            kwargs = {'id': pk}
+            kwargs = {"id": pk}
         try:
             return cls.user_model().get(
                 get_query_by_dict_param(cls.user_model(), kwargs)
@@ -116,9 +122,7 @@ class PeeweeUserMixin(UserMixin, BaseModel):
         if not isinstance(uid, six.string_types):
             uid = str(uid)
         try:
-            return cls.select().where(
-                cls.provider == provider, cls.uid == uid
-            ).get()
+            return cls.select().where(cls.provider == provider, cls.uid == uid).get()
         except cls.DoesNotExist:
             return None
 
@@ -145,9 +149,9 @@ class PeeweeNonceMixin(NonceMixin, BaseModel):
 
     @classmethod
     def use(cls, server_url, timestamp, salt):
-        return cls.get_or_create(cls.server_url == server_url,
-                                 cls.timestamp == timestamp,
-                                 cls.salt == salt)
+        return cls.get_or_create(
+            cls.server_url == server_url, cls.timestamp == timestamp, cls.salt == salt
+        )
 
 
 class PeeweeAssociationMixin(AssociationMixin, BaseModel):
@@ -161,11 +165,11 @@ class PeeweeAssociationMixin(AssociationMixin, BaseModel):
     @classmethod
     def store(cls, server_url, association):
         try:
-            assoc = cls.get(cls.server_url == server_url,
-                            cls.handle == association.handle)
+            assoc = cls.get(
+                cls.server_url == server_url, cls.handle == association.handle
+            )
         except cls.DoesNotExist:
-            assoc = cls(server_url=server_url,
-                        handle=association.handle)
+            assoc = cls(server_url=server_url, handle=association.handle)
 
         assoc.secret = base64.encodestring(association.secret)
         assoc.issued = association.issued
