@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Updated `select` queries with method that accepts query arguemnts.
+- Updated `select` queries with method that accepts query arguments.
 
 ## [1.0.0](https://github.com/python-social-auth/social-storage-peewee/releases/tag/1.0.0) - 2017-01-22
 
