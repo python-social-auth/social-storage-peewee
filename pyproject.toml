@@ -1,0 +1,47 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+  "setuptools>=61.2"
+]
+
+[project]
+authors = [
+  {name = "Matias Aguirre", email = "matiasaguirre@gmail.com"}
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Topic :: Internet",
+  "Intended Audience :: Developers",
+  "Environment :: Web Environment",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 2.7",
+  "Programming Language :: Python :: 3"
+]
+dependencies = [
+  "six",
+  "peewee",
+  "social-auth-core >= 1.0.0"
+]
+description = "Python Social Authentication, Peewee storage."
+dynamic = ["version"]
+keywords = [
+  "peewee",
+  "social",
+  "auth"
+]
+license = "BSD-3-Clause"
+name = "social-auth-storage-peewee"
+readme = "README.md"
+
+[project.urls]
+Homepage = "https://github.com/python-social-auth/social-storage-peewee"
+
+[tool.setuptools]
+include-package-data = false
+packages = [
+  "social_peewee"
+]
+zip-safe = false
+
+[tool.setuptools.dynamic]
+version = {attr = "social_peewee.__version__"}
